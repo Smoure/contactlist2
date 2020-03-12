@@ -3,18 +3,26 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 
-export const EditContact = () => {
+export const EditContact = props => {
 	const [contacts, setContacts] = useState([]);
 	const { store, actions } = useContext(Context);
 
-	function putFetch(contactInfo) {
-		fetch("https://assets.breatheco.de/apis/fake/contact/agenda/smoure")
+	function putFetch(id) {
+		fetch("https://assets.breatheco.de/apis/fake/contact/" + id, { method: "GET" })
 			.then(resp => resp.json())
 			.then(data => {
 				// console.log(data);
 				setContacts(data);
 			});
 	}
+
+	// export function fetchBlogPost(id) {
+	//     return fetch('http://api.symfony-3.dev/app_dev.php/posts/' + id, {
+	//         method: 'GET',
+	//         mode: 'CORS'
+	//     }).then(res => res.json())
+	//     .catch(err => err);
+	// }
 
 	return (
 		<div className="container">
@@ -29,15 +37,15 @@ export const EditContact = () => {
 									<input type="text" className="form-control" placeholder="Full Name" />
 								</div>
 								<div className="form-group">
-									<label>Email</label>
+									<label>{item.email}</label>
 									<input type="email" className="form-control" placeholder="Enter email" />
 								</div>
 								<div className="form-group">
-									<label>Phone</label>
+									<label>{item.phone}</label>
 									<input type="phone" className="form-control" placeholder="Enter phone" />
 								</div>
 								<div className="form-group">
-									<label>Address</label>
+									<label>{item.address}</label>
 									<input type="text" className="form-control" placeholder="Enter address" />
 								</div>
 								<button

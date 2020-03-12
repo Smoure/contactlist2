@@ -1,7 +1,35 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
+import { Context } from "../store/appContext";
+
 export const AddContact = () => {
+	const [contacts, setContacts] = useState([]);
+	const { store, actions } = useContext(Context);
+
+	// useEffect (() => {
+	// 	fetch("https://assets.breatheco.de/apis/fake/contact/agenda/smoure", { method: "POST" })
+	// 		.then(resp => resp.json())
+	// 		.then(data => {
+	// 			// console.log(data);
+	// 			setContacts(data);
+	// 		});
+	// }, []);
+
+	function addContact(contactObject) {
+		fetch("https://assets.breatheco.de/apis/fake/contact/agenda/smoure", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(contactObject)
+		})
+			.then(resp => resp.json())
+			.then(singleContact => {
+				console.log("addContact", singleContact);
+			});
+	}
+
 	return (
 		<div className="container">
 			<div>
@@ -23,7 +51,18 @@ export const AddContact = () => {
 						<label>Address</label>
 						<input type="text" className="form-control" placeholder="Enter address" />
 					</div>
-					<button type="button" className="btn btn-primary form-control" onClick={() => this.addContact}>
+					<button
+						type="button"
+						className="btn btn-primary form-control"
+						onClick={() => {
+							this.addContact({
+								full_name: fullname,
+								email: email,
+								agenda_slug: "smoure",
+								address: address,
+								phone: phone
+							});
+						}}>
 						save
 					</button>
 					<Link className="mt-3 w-100 text-center" to="/">

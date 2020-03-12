@@ -9,17 +9,17 @@ export const Contacts = () => {
 	const [state, setState] = useState({
 		showModal: false
 	});
-	const [contacts, setContacts] = useState([]);
 	const { store, actions } = useContext(Context);
+	// const [contacts, setContacts] = useState([]);
 
-	useEffect(() => {
-		fetch("https://assets.breatheco.de/apis/fake/contact/agenda/smoure")
-			.then(resp => resp.json())
-			.then(data => {
-				// console.log(data);
-				setContacts(data);
-			});
-	}, []);
+	// useEffect(() => {
+	// 	fetch("https://assets.breatheco.de/apis/fake/contact/agenda/smoure")
+	// 		.then(resp => resp.json())
+	// 		.then(data => {
+	// 			console.log("contacts page", data);
+	// 			setContacts(data);
+	// 		});
+	// }, []);
 
 	return (
 		<div className="container">
@@ -30,7 +30,7 @@ export const Contacts = () => {
 					</Link>
 				</p>
 				<div id="contacts" className="panel-collapse collapse show" aria-expanded="true">
-					{contacts.map((item, index) => {
+					{store.contacts.map((item, index) => {
 						return (
 							<ul className="list-group pull-down" id="contact-list" Key={index}>
 								<ContactCard
